@@ -1,0 +1,66 @@
+<svg viewBox="0 0 900 480" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI, Arial, sans-serif">
+  <rect width="900" height="480" fill="#ffffff"/>
+  <text x="450" y="34" text-anchor="middle" font-size="20" font-weight="700" fill="#1a1a2e">FAULTX — HIL Fault Injection — Block Diagram</text>
+
+  <rect x="30" y="80" width="160" height="60" rx="8" fill="#fae8ff" stroke="#a21caf" stroke-width="1.5"/>
+  <text x="110" y="105" text-anchor="middle" font-size="13" font-weight="600" fill="#1a1a2e">Test ROM</text>
+  <text x="110" y="124" text-anchor="middle" font-size="11" fill="#444">8 vectors, reused from Exp.1</text>
+
+  <rect x="230" y="40" width="150" height="60" rx="8" fill="#dcfce7" stroke="#15803d" stroke-width="2"/>
+  <text x="305" y="65" text-anchor="middle" font-size="13" font-weight="700" fill="#1a1a2e">alu4 golden</text>
+  <text x="305" y="83" text-anchor="middle" font-size="11" fill="#444">clean reference</text>
+
+  <rect x="230" y="150" width="150" height="60" rx="8" fill="#fee2e2" stroke="#b91c1c" stroke-width="2"/>
+  <text x="305" y="172" text-anchor="middle" font-size="13" font-weight="700" fill="#1a1a2e">Fault Wrapper</text>
+  <text x="305" y="190" text-anchor="middle" font-size="11" fill="#444">a/b input injection</text>
+  <text x="305" y="203" text-anchor="middle" font-size="10" fill="#777">stuck0/stuck1/bitflip</text>
+
+  <rect x="230" y="230" width="150" height="55" rx="8" fill="#fee2e2" stroke="#b91c1c" stroke-width="2"/>
+  <text x="305" y="252" text-anchor="middle" font-size="13" font-weight="700" fill="#1a1a2e">alu4 faulted_core</text>
+  <text x="305" y="270" text-anchor="middle" font-size="11" fill="#444">same DUT core</text>
+
+  <rect x="230" y="305" width="150" height="55" rx="8" fill="#fee2e2" stroke="#b91c1c" stroke-width="1.5"/>
+  <text x="305" y="327" text-anchor="middle" font-size="12" font-weight="600" fill="#1a1a2e">Output Fault</text>
+  <text x="305" y="344" text-anchor="middle" font-size="11" fill="#444">target=result</text>
+
+  <rect x="30" y="200" width="160" height="110" rx="8" fill="#eef2ff" stroke="#4338ca" stroke-width="1.5"/>
+  <text x="110" y="222" text-anchor="middle" font-size="12" font-weight="600" fill="#1a1a2e">Fault Config</text>
+  <text x="110" y="242" text-anchor="middle" font-size="11" fill="#444">BTN1/2/3=target a/b/result</text>
+  <text x="110" y="260" text-anchor="middle" font-size="11" fill="#444">SW1:SW0=fault_type</text>
+  <text x="110" y="278" text-anchor="middle" font-size="10" fill="#777">none/stuck0/stuck1/bitflip</text>
+  <text x="110" y="295" text-anchor="middle" font-size="10" fill="#777">priority: a &gt; b &gt; result</text>
+
+  <rect x="460" y="130" width="170" height="90" rx="10" fill="#e0f2fe" stroke="#0369a1" stroke-width="2"/>
+  <text x="545" y="158" text-anchor="middle" font-size="13" font-weight="700" fill="#1a1a2e">Comparator</text>
+  <text x="545" y="178" text-anchor="middle" font-size="11" fill="#444">golden vs faulted</text>
+  <text x="545" y="195" text-anchor="middle" font-size="11" fill="#444">mismatch_count (0-8)</text>
+
+  <rect x="680" y="130" width="170" height="90" rx="10" fill="#fff7ed" stroke="#c2410c" stroke-width="2"/>
+  <text x="765" y="158" text-anchor="middle" font-size="13" font-weight="700" fill="#1a1a2e">Free-running FSM</text>
+  <text x="765" y="178" text-anchor="middle" font-size="11" fill="#444">RUN(8 ticks)-&gt;DONE-&gt;RUN</text>
+  <text x="765" y="195" text-anchor="middle" font-size="11" fill="#444">auto-loops, no start btn</text>
+
+  <rect x="680" y="250" width="170" height="70" rx="8" fill="#fff7ed" stroke="#c2410c" stroke-width="2"/>
+  <text x="765" y="275" text-anchor="middle" font-size="13" font-weight="700" fill="#1a1a2e">LED Display</text>
+  <text x="765" y="295" text-anchor="middle" font-size="11" fill="#444">heartbeat/all-match + idx</text>
+
+  <g stroke="#555" stroke-width="1.6" fill="none" marker-end="url(#arrow4)">
+    <path d="M190 100 L230 65"/>
+    <path d="M190 255 L230 180"/>
+    <path d="M305 100 L305 150"/>
+    <path d="M305 210 L305 230"/>
+    <path d="M305 285 L305 305"/>
+    <path d="M380 65 L460 150"/>
+    <path d="M380 330 L460 190"/>
+    <path d="M630 170 L680 170"/>
+    <path d="M765 220 L765 250"/>
+  </g>
+
+  <defs>
+    <marker id="arrow4" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,6 L9,3 z" fill="#555"/>
+    </marker>
+  </defs>
+
+  <text x="450" y="460" text-anchor="middle" font-size="11" fill="#777">Team Mahasena — Lead: Manaswi — PYNQ-Z2 (XC7Z020CLG400-1)</text>
+</svg>

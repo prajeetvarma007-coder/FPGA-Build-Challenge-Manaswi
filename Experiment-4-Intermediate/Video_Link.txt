@@ -1,0 +1,7 @@
+Experiment 4 - FAULTX: HIL Fault Injection
+Google Drive video link: [ TODO - Manaswi: record demo video and paste the
+shareable Google Drive link here. Video must cover: Introduction, Problem
+Statement, Design Explanation (architecture + RTL code walkthrough),
+Demonstration (hardware setup + board running, including live fault
+injection via the switches/buttons and showing the mismatch count change),
+Conclusion. ]

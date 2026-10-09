@@ -1,0 +1,43 @@
+﻿
+****** xsim v2026.1 (64-bit)
+  **** SW Build 6511674 on Tue Jun 16 11:02:23 MDT 2026
+  **** IP Build 6504888 on Tue Jun 09 09:05:25 MDT 2026
+  **** SharedData Build 6501428 on Mon Jun 08 17:34:18 MDT 2026
+  **** Start of session at: Sat Oct 10 02:02:26 2026
+    ** Copyright 1986-2022 Xilinx, Inc. All Rights Reserved.
+    ** Copyright 2022-2026 Advanced Micro Devices, Inc. All Rights Reserved.
+
+source xsim.dir/tb_top_sim/xsim_script.tcl
+# xsim {tb_top_sim} -autoloadwcfg -runall
+Time resolution is 1 ps
+run -all
+================================================
+ Adaptive PUF Authentication - Testbench
+================================================
+
+-- Phase 1: Enroll then authenticate challenge 0 (no noise) --
+  Enrolled ch0: stored bit = 1 (expected 1)
+  [PASS] Auth ch0, no noise -> MATCH, enrolled, challenge=00 : led=1100 (expected 1100)
+
+-- Phase 2: Authenticate challenge 0 WITH noise injected --
+  [PASS] Auth ch0, with noise -> NO MATCH (vote flipped), still enrolled : led=0100 (expected 0100)
+
+-- Phase 3: Enroll then authenticate challenge 1 (no noise) --
+  Enrolled ch1: stored bit = 0 (expected 0)
+  [PASS] Auth ch1, no noise -> MATCH, enrolled, challenge=01 : led=1101 (expected 1101)
+
+-- Phase 4: Authenticate challenge 2, which was never enrolled --
+  [PASS] Auth ch2, never enrolled -> NO MATCH, not enrolled, challenge=10 : led=0010 (expected 0010)
+
+-- Phase 5: Re-authenticate challenge 0 (confirm isolation) --
+  [PASS] Auth ch0 again, no noise -> still MATCH (unaffected by ch1/ch2) : led=1100 (expected 1100)
+
+-- Phase 6: Reset behaviour --
+  [PASS] Reset clears all enrollment storage.
+
+================================================
+ TESTBENCH SUMMARY: ALL CHECKS PASSED (0 errors)
+================================================
+$finish called at time : 1516 ns : File "C:/Users/siddh/FPGA-Build-Challenge-Manaswi/Experiment-5-Advanced/Testbench/tb_top.v" Line 167
+exit
+INFO: [Common 17-206] Exiting xsim at Sat Oct 10 02:02:28 2026...

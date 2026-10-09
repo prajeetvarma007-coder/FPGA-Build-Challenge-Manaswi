@@ -1,0 +1,35 @@
+﻿
+****** xsim v2026.1 (64-bit)
+  **** SW Build 6511674 on Tue Jun 16 11:02:23 MDT 2026
+  **** IP Build 6504888 on Tue Jun 09 09:05:25 MDT 2026
+  **** SharedData Build 6501428 on Mon Jun 08 17:34:18 MDT 2026
+  **** Start of session at: Sat Oct 10 01:56:00 2026
+    ** Copyright 1986-2022 Xilinx, Inc. All Rights Reserved.
+    ** Copyright 2022-2026 Advanced Micro Devices, Inc. All Rights Reserved.
+
+source xsim.dir/tb_top_sim/xsim_script.tcl
+# xsim {tb_top_sim} -autoloadwcfg -runall
+Time resolution is 1 ps
+run -all
+================================================
+ FAULTX - HIL Fault Injection - Testbench
+================================================
+
+-- Phase 1: fault_type=NONE, target_a held --
+  [PASS] No fault -> 0/8 mismatches (golden == faulted) : led=1000 mismatch_count=0
+
+-- Phase 2: fault_type=STUCK_AT_0, target_a held --
+  [PASS] a stuck-at-0 -> 7/8 mismatches, first at idx 0 (idx6 is masked: a was already 0) : led=0000 mismatch_count=7
+
+-- Phase 3: fault_type=BIT_FLIP, target_result held --
+  [PASS] result bit1 flipped -> 8/8 mismatches (full coverage, no masking) : led=0000 mismatch_count=8
+
+-- Phase 4: Reset behaviour --
+  [PASS] Reset clears idx/mismatch_count and returns FSM to S_RUN.
+
+================================================
+ TESTBENCH SUMMARY: ALL CHECKS PASSED (0 errors)
+================================================
+$finish called at time : 948 ns : File "C:/Users/siddh/FPGA-Build-Challenge-Manaswi/Experiment-4-Intermediate/Testbench/tb_top.v" Line 143
+exit
+INFO: [Common 17-206] Exiting xsim at Sat Oct 10 01:56:02 2026...

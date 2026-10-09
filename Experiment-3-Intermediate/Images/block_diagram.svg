@@ -1,0 +1,54 @@
+<svg viewBox="0 0 900 460" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI, Arial, sans-serif">
+  <rect width="900" height="460" fill="#ffffff"/>
+  <text x="450" y="34" text-anchor="middle" font-size="20" font-weight="700" fill="#1a1a2e">CPU-FPGA Decision Engine — Block Diagram</text>
+
+  <rect x="30" y="80" width="170" height="70" rx="8" fill="#fef3c7" stroke="#b45309" stroke-width="1.5"/>
+  <text x="115" y="108" text-anchor="middle" font-size="13" font-weight="600" fill="#1a1a2e">Temperature Model</text>
+  <text x="115" y="126" text-anchor="middle" font-size="12" fill="#444">triangle wave (as Exp.2)</text>
+  <text x="115" y="142" text-anchor="middle" font-size="11" fill="#777">tick-paced</text>
+
+  <rect x="250" y="80" width="150" height="70" rx="8" fill="#eef2ff" stroke="#4338ca" stroke-width="1.5"/>
+  <text x="325" y="108" text-anchor="middle" font-size="13" font-weight="600" fill="#1a1a2e">Band Classifier</text>
+  <text x="325" y="126" text-anchor="middle" font-size="12" fill="#444">LOW / MID / HIGH</text>
+  <text x="325" y="142" text-anchor="middle" font-size="11" fill="#777">2 comparators</text>
+
+  <rect x="30" y="190" width="170" height="130" rx="8" fill="#fee2e2" stroke="#b91c1c" stroke-width="1.5"/>
+  <text x="115" y="215" text-anchor="middle" font-size="13" font-weight="600" fill="#1a1a2e">Inputs</text>
+  <text x="115" y="235" text-anchor="middle" font-size="12" fill="#444">BTN1/2/3 = event0/1/2</text>
+  <text x="115" y="253" text-anchor="middle" font-size="12" fill="#444">SW1:SW0 = mode[1:0]</text>
+  <text x="115" y="271" text-anchor="middle" font-size="11" fill="#777">Normal/PowerSave/</text>
+  <text x="115" y="286" text-anchor="middle" font-size="11" fill="#777">Performance/Maintenance</text>
+
+  <rect x="430" y="110" width="230" height="230" rx="10" fill="#dcfce7" stroke="#15803d" stroke-width="2"/>
+  <text x="545" y="138" text-anchor="middle" font-size="14" font-weight="700" fill="#1a1a2e">Fixed-Priority Rule Table</text>
+  <text x="545" y="158" text-anchor="middle" font-size="11" fill="#444">R0: event2 &amp; HIGH -&gt; ALERT</text>
+  <text x="545" y="174" text-anchor="middle" font-size="11" fill="#444">R1: HIGH -&gt; THROTTLE</text>
+  <text x="545" y="190" text-anchor="middle" font-size="11" fill="#444">R2: event1 -&gt; SAFE_MODE</text>
+  <text x="545" y="206" text-anchor="middle" font-size="11" fill="#444">R3: Maintenance -&gt; CALIBRATE</text>
+  <text x="545" y="222" text-anchor="middle" font-size="11" fill="#444">R4: event0 &amp; Perf -&gt; BOOST</text>
+  <text x="545" y="238" text-anchor="middle" font-size="11" fill="#444">R5: Perf &amp; LOW -&gt; ECO_BOOST</text>
+  <text x="545" y="254" text-anchor="middle" font-size="11" fill="#444">R6: event0 -&gt; LOG_EVENT</text>
+  <text x="545" y="270" text-anchor="middle" font-size="11" fill="#444">R7: default -&gt; NONE</text>
+  <text x="545" y="292" text-anchor="middle" font-size="10" fill="#777" font-style="italic">priority order = checked top-down,</text>
+  <text x="545" y="306" text-anchor="middle" font-size="10" fill="#777" font-style="italic">first match wins (combinational)</text>
+
+  <rect x="720" y="180" width="150" height="90" rx="8" fill="#fff7ed" stroke="#c2410c" stroke-width="2"/>
+  <text x="795" y="208" text-anchor="middle" font-size="13" font-weight="700" fill="#1a1a2e">LED Display</text>
+  <text x="795" y="228" text-anchor="middle" font-size="12" fill="#444">LED[3]=heartbeat</text>
+  <text x="795" y="246" text-anchor="middle" font-size="12" fill="#444">LED[2:0]=action</text>
+
+  <g stroke="#555" stroke-width="1.6" fill="none" marker-end="url(#arrow3)">
+    <path d="M200 115 L250 115"/>
+    <path d="M200 255 L430 220"/>
+    <path d="M400 115 L430 160"/>
+    <path d="M660 225 L720 225"/>
+  </g>
+
+  <defs>
+    <marker id="arrow3" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,6 L9,3 z" fill="#555"/>
+    </marker>
+  </defs>
+
+  <text x="450" y="440" text-anchor="middle" font-size="11" fill="#777">Team Mahasena — Lead: Manaswi — PYNQ-Z2 (XC7Z020CLG400-1)</text>
+</svg>

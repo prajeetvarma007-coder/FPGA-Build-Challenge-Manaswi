@@ -1,0 +1,58 @@
+<svg viewBox="0 0 900 500" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI, Arial, sans-serif">
+  <rect width="900" height="500" fill="#ffffff"/>
+  <text x="450" y="34" text-anchor="middle" font-size="20" font-weight="700" fill="#1a1a2e">Adaptive PUF Authentication — Block Diagram</text>
+
+  <rect x="30" y="80" width="190" height="90" rx="8" fill="#fef3c7" stroke="#b45309" stroke-width="1.5" stroke-dasharray="5,3"/>
+  <text x="125" y="105" text-anchor="middle" font-size="12" font-weight="700" fill="#1a1a2e">raw_bit_fn (PLACEHOLDER)</text>
+  <text x="125" y="123" text-anchor="middle" font-size="10" fill="#444">entropy stand-in - NOT a real</text>
+  <text x="125" y="137" text-anchor="middle" font-size="10" fill="#444">PUF (see honest scope note).</text>
+  <text x="125" y="154" text-anchor="middle" font-size="10" fill="#777">Real design: swap for RO-PUF /</text>
+  <text x="125" y="167" text-anchor="middle" font-size="10" fill="#777">SRAM-PUF / arbiter-PUF here.</text>
+
+  <rect x="260" y="80" width="170" height="90" rx="8" fill="#eef2ff" stroke="#4338ca" stroke-width="1.5"/>
+  <text x="345" y="105" text-anchor="middle" font-size="13" font-weight="700" fill="#1a1a2e">K=5 Sampler</text>
+  <text x="345" y="125" text-anchor="middle" font-size="11" fill="#444">sample_idx 0..4</text>
+  <text x="345" y="143" text-anchor="middle" font-size="11" fill="#444">1 raw bit per tick</text>
+  <text x="345" y="160" text-anchor="middle" font-size="10" fill="#777">BTN3=noise_inject</text>
+
+  <rect x="470" y="80" width="170" height="90" rx="10" fill="#dcfce7" stroke="#15803d" stroke-width="2"/>
+  <text x="555" y="110" text-anchor="middle" font-size="13" font-weight="700" fill="#1a1a2e">Majority Vote</text>
+  <text x="555" y="130" text-anchor="middle" font-size="11" fill="#444">&gt;=3-of-5 ones</text>
+  <text x="555" y="148" text-anchor="middle" font-size="11" fill="#444">= stabilized bit</text>
+  <text x="555" y="163" text-anchor="middle" font-size="10" fill="#777">"Adaptive" stage</text>
+
+  <rect x="70" y="220" width="200" height="90" rx="8" fill="#fae8ff" stroke="#a21caf" stroke-width="1.5"/>
+  <text x="170" y="245" text-anchor="middle" font-size="13" font-weight="700" fill="#1a1a2e">Enrollment Store</text>
+  <text x="170" y="265" text-anchor="middle" font-size="11" fill="#444">storage_bits[4]</text>
+  <text x="170" y="283" text-anchor="middle" font-size="11" fill="#444">enrolled_flags[4]</text>
+  <text x="170" y="300" text-anchor="middle" font-size="10" fill="#777">BTN1=enroll</text>
+
+  <rect x="320" y="220" width="200" height="90" rx="8" fill="#e0f2fe" stroke="#0369a1" stroke-width="2"/>
+  <text x="420" y="245" text-anchor="middle" font-size="13" font-weight="700" fill="#1a1a2e">Auth Comparator</text>
+  <text x="420" y="265" text-anchor="middle" font-size="11" fill="#444">live vote == stored?</text>
+  <text x="420" y="283" text-anchor="middle" font-size="11" fill="#444">&amp;&amp; enrolled_flags[ch]</text>
+  <text x="420" y="300" text-anchor="middle" font-size="10" fill="#777">BTN2=auth</text>
+
+  <rect x="570" y="220" width="200" height="90" rx="8" fill="#fff7ed" stroke="#c2410c" stroke-width="2"/>
+  <text x="670" y="245" text-anchor="middle" font-size="13" font-weight="700" fill="#1a1a2e">LED Display</text>
+  <text x="670" y="265" text-anchor="middle" font-size="11" fill="#444">[3]=match [2]=enrolled?</text>
+  <text x="670" y="283" text-anchor="middle" font-size="11" fill="#444">[1:0]=challenge echo</text>
+  <text x="670" y="300" text-anchor="middle" font-size="10" fill="#777">SW1:SW0=challenge</text>
+
+  <g stroke="#555" stroke-width="1.6" fill="none" marker-end="url(#arrow5)">
+    <path d="M220 125 L260 125"/>
+    <path d="M430 125 L470 125"/>
+    <path d="M555 170 L555 200 L170 200 L170 220"/>
+    <path d="M555 170 L555 200 L420 200 L420 220"/>
+    <path d="M270 265 L320 265"/>
+    <path d="M520 265 L570 265"/>
+  </g>
+
+  <defs>
+    <marker id="arrow5" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,6 L9,3 z" fill="#555"/>
+    </marker>
+  </defs>
+
+  <text x="450" y="480" text-anchor="middle" font-size="11" fill="#777">Team Mahasena — Lead: Manaswi — PYNQ-Z2 (XC7Z020CLG400-1)</text>
+</svg>

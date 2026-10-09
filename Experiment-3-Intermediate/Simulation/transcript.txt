@@ -1,0 +1,45 @@
+﻿
+****** xsim v2026.1 (64-bit)
+  **** SW Build 6511674 on Tue Jun 16 11:02:23 MDT 2026
+  **** IP Build 6504888 on Tue Jun 09 09:05:25 MDT 2026
+  **** SharedData Build 6501428 on Mon Jun 08 17:34:18 MDT 2026
+  **** Start of session at: Sat Oct 10 01:53:50 2026
+    ** Copyright 1986-2022 Xilinx, Inc. All Rights Reserved.
+    ** Copyright 2022-2026 Advanced Micro Devices, Inc. All Rights Reserved.
+
+source xsim.dir/tb_top_sim/xsim_script.tcl
+# xsim {tb_top_sim} -autoloadwcfg -runall
+Time resolution is 1 ps
+run -all
+================================================
+ CPU-FPGA Decision Engine - Testbench
+================================================
+
+-- Phase 1: LOW temperature (temp=10, right after reset) --
+  [PASS] No inputs -> NONE (R7 default) : action=000 (expected 000)
+  [PASS] event0 only -> LOG_EVENT (R6) : action=100 (expected 100)
+  [PASS] event1 only -> SAFE_MODE (R2) : action=101 (expected 101)
+  [PASS] mode=Maintenance -> CALIBRATE (R3) : action=110 (expected 110)
+  [PASS] mode=Performance, LOW temp, no event -> ECO_BOOST (R5) : action=111 (expected 111)
+  [PASS] mode=Performance + event0 -> BOOST (R4 beats R5) : action=011 (expected 011)
+
+-- Phase 2: HIGH temperature (wait for temp > 180) --
+  temp pinned near 200 (band=HIGH)
+  [PASS] HIGH temp alone -> THROTTLE (R1) : action=010 (expected 010)
+  [PASS] event2 + HIGH temp -> ALERT (R0 overrides R1) : action=001 (expected 001)
+  [PASS] event1 + HIGH temp -> THROTTLE still wins (R1 preempts R2) : action=010 (expected 010)
+
+-- Phase 3: MID temperature (wait for temp == 120) --
+  temp pinned at 120 (band=MID)
+  [PASS] MID temp alone, no events -> NONE (no rule matches) : action=000 (expected 000)
+  [PASS] mode=Performance + event0 at MID temp -> BOOST (R4 is temp-independent) : action=011 (expected 011)
+
+-- Phase 4: Reset behaviour --
+  [PASS] Reset returns temp to BASE_MIN and action to NONE.
+
+================================================
+ TESTBENCH SUMMARY: ALL CHECKS PASSED (0 errors)
+================================================
+$finish called at time : 11660 ns : File "C:/Users/siddh/FPGA-Build-Challenge-Manaswi/Experiment-3-Intermediate/Testbench/tb_top.v" Line 155
+exit
+INFO: [Common 17-206] Exiting xsim at Sat Oct 10 01:53:52 2026...

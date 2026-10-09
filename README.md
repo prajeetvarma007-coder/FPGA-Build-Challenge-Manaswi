@@ -20,18 +20,26 @@
 |---|--------|------------|------------|:---:|:---:|:---:|:---:|
 | 1 | `Experiment-1-Beginner` | **Automated Digital Circuit Tester** | Beginner | ✅ | ✅ 0 errors | ⏳ pending | ✅ |
 | 2 | `Experiment-2-Beginner` | **TrustFuse — Hardware Sensor Trust** | Beginner | ✅ | ✅ 0 errors | ⏳ pending | ✅ |
-| 3 | `Experiment-3-Intermediate` | **CPU–FPGA Decision Engine** | Intermediate | 🔲 | 🔲 | 🔲 | 🔲 |
-| 4 | `Experiment-4-Intermediate` | **FAULTX — HIL Fault Injection** | Intermediate | 🔲 | 🔲 | 🔲 | 🔲 |
-| 5 | `Experiment-5-Advanced` | **Adaptive PUF Authentication** | Advanced | 🔲 | 🔲 | 🔲 | 🔲 |
+| 3 | `Experiment-3-Intermediate` | **CPU–FPGA Decision Engine** | Intermediate | ✅ | ✅ 0 errors | ⏳ pending | ✅ |
+| 4 | `Experiment-4-Intermediate` | **FAULTX — HIL Fault Injection** | Intermediate | ✅ | ✅ 0 errors | ⏳ pending | ✅ |
+| 5 | `Experiment-5-Advanced` | **Adaptive PUF Authentication** | Advanced | ✅ | ✅ 0 errors | ⏳ pending | ✅ |
 
-### Experiment 1 — Automated Digital Circuit Tester
+**All 5 experiments are RTL-complete and simulation-verified (0 errors each, every expected value hand-derived before running).** Only hardware bring-up (bitstream + board photos + video) remains — see "Known Gaps" below.
+
+### Experiment 1 — Automated Digital Circuit Tester *(Beginner)*
 An FSM-driven "mini ATE" that automatically applies 8 stored test vectors to a 4-bit ALU (Device Under Test), compares every result against a hand-verified expected value, and reports PASS/FAIL + failing-vector index on the LEDs.
 
-### Experiment 2 — TrustFuse: Hardware Sensor Trust
+### Experiment 2 — TrustFuse: Hardware Sensor Trust *(Beginner)*
 A triple-sensor cross-validation and fusion circuit. Three simulated sensors track one quantity with known offsets; pairwise deviation checking computes a live trust level (NONE/LOW/MEDIUM/HIGH) and flags a single faulty sensor. Push-buttons inject live faults for demonstration.
 
-### Experiments 3–5
-Not yet started — placeholder folders only (see table above).
+### Experiment 3 — CPU–FPGA Decision Engine *(Intermediate)*
+A fixed-priority, single-cycle combinational decision engine — the FPGA-fabric replacement for a CPU's sequential if/else-if decision chain. 8 prioritized rules combine a simulated temperature band, a 2-bit mode register, and 3 async "event" buttons into one of 8 action codes, with deliberate, verified priority ordering (automatic thermal protection always preempts a manual request).
+
+### Experiment 4 — FAULTX: HIL Fault Injection *(Intermediate)*
+A true Hardware-In-the-Loop fault-injection rig, directly extending Experiment 1: runs a clean "golden" ALU and a live-faultable "faulted" ALU in parallel against the same 8 test vectors, continuously comparing them and tracking a real fault-coverage metric (not just pass/fail) — including the honest discovery that an input stuck-at fault can be *masked* by coincidence, while an output bit-flip fault achieves full coverage.
+
+### Experiment 5 — Adaptive PUF Authentication *(Advanced)*
+A fully-verified PUF-style authentication pipeline: K=5-sample majority-vote "adaptive" response stabilization, per-challenge enrollment, and gated challenge-response authentication. Honestly scoped: the digital pipeline is real, synthesizable RTL; the physical entropy source is a clearly-labelled placeholder, since no RTL simulator can honestly demonstrate real silicon-variation-based unclonability (see the experiment's own documentation for the full explanation and the real hardware options).
 
 ---
 
@@ -53,10 +61,10 @@ FPGA-Build-Challenge-Manaswi/
 │   ├── Bitstream/      (pending - see Known Gaps below)
 │   └── Video_Link.txt
 │
-├── Experiment-2-Beginner/        (same layout as above)
-├── Experiment-3-Intermediate/    (empty - placeholder)
-├── Experiment-4-Intermediate/    (empty - placeholder)
-├── Experiment-5-Advanced/        (empty - placeholder)
+├── Experiment-2-Beginner/        (same layout - TrustFuse)
+├── Experiment-3-Intermediate/    (same layout - CPU-FPGA Decision Engine)
+├── Experiment-4-Intermediate/    (same layout - FAULTX)
+├── Experiment-5-Advanced/        (same layout - Adaptive PUF Authentication)
 │
 └── Final_Report/
     └── Mahasena_Final_Report.pdf   <- TODO, combine all 5 experiment reports
@@ -77,17 +85,20 @@ that could not be completed from this environment:
    ```bash
    vivado -mode batch -source run_vivado_full.tcl
    ```
-   This produces `Experiment-1-Beginner/Bitstream/top_module.bit` automatically
-   (Experiment 2 needs the project name/paths in the script updated the same way).
+   This produces `Experiment-1-Beginner/Bitstream/top_module.bit` automatically.
+   For Experiments 2-5, copy `run_vivado_full.tcl`, rename it, and update
+   `project_name` + `src_dir` to point at that experiment's folder (a one-line
+   note to this effect is already in the script's header comment).
 
-2. **Program the PYNQ-Z2** with each bitstream and take:
+2. **Program the PYNQ-Z2** with each of the 5 bitstreams and take:
    - `Images/board_setup.jpg` (board powered & wired)
-   - `Images/hardware_output.jpg` (LEDs showing a result)
+   - `Images/hardware_output.jpg` (LEDs showing a result — for Experiment 4
+     and 5, a great shot is mid-demo with a fault/noise button held)
 
-3. **Waveform screenshots** — open `Simulation/tb_top_sim.wdb` in the Vivado
-   GUI waveform viewer and save a screenshot as `Images/waveform.png` for
-   each experiment (the simulations themselves are already done and verified
-   — see `Simulation/transcript.txt`).
+3. **Waveform screenshots** — open each experiment's `Simulation/tb_top_sim.wdb`
+   in the Vivado GUI waveform viewer and save a screenshot as
+   `Images/waveform.png` (the simulations themselves are already done and
+   verified for all 5 experiments — see each `Simulation/transcript.txt`).
 
 4. **Demo videos** — record per the competition brief (Introduction, Problem
    Statement, Design Explanation, Hardware Demonstration, Conclusion), upload
@@ -108,22 +119,26 @@ that could not be completed from this environment:
 
 ## What's Already Done
 
-- ✅ Experiment 1 & 2: complete, synthesizable RTL (clean compile, no errors)
-- ✅ Experiment 1 & 2: self-checking testbenches, **run and verified** —
-  0 errors, every expected value hand-calculated and matched exactly
-- ✅ Experiment 1 & 2: PYNQ-Z2 XDC constraints (pins verified against an
+- ✅ **All 5 experiments**: complete, synthesizable RTL (clean compile, no errors)
+- ✅ **All 5 experiments**: self-checking testbenches, **run and verified** —
+  0 errors each, every expected value hand-calculated *before* running and
+  matched exactly (total: 1 + 1 + 11 + 4 + 6 = 23 individually hand-derived
+  checks across the 5 testbenches, all passing)
+- ✅ **All 5 experiments**: PYNQ-Z2 XDC constraints (pins verified against an
   independent published PYNQ-Z2 pin reference)
-- ✅ Experiment 1 & 2: block diagrams, full documentation PDFs (7-section
-  format per the competition brief)
+- ✅ **All 5 experiments**: block diagrams, full documentation PDFs (7-section
+  format per the competition brief), each with an honestly-documented
+  limitation/finding (TrustFuse's tolerance overlap, FAULTX's masked fault,
+  PUF's entropy-placeholder scope note and margin-sensitivity finding)
 - ✅ `.gitignore` configured to exclude Vivado project junk
-- ✅ Local git repository initialized with a `dev` branch
+- ✅ Local git repository, pushed to GitHub (`main` + `dev` branches)
 
-## How to Re-run the Simulations Yourself
+## How to Re-run Any Simulation Yourself
 
 ```bash
-cd Experiment-1-Beginner\Simulation
+cd Experiment-<N>-<Difficulty>\Simulation
 C:\AMDDesignTools\2026.1\Vivado\bin\xvlog.bat ..\RTL\top_module.v ..\Testbench\tb_top.v --work work
 C:\AMDDesignTools\2026.1\Vivado\bin\xelab.bat tb_top -debug typical -s tb_top_sim
 C:\AMDDesignTools\2026.1\Vivado\bin\xsim.bat tb_top_sim -R
 ```
-(Same for `Experiment-2-Beginner`.)
+(Works identically for all 5 experiment folders.)

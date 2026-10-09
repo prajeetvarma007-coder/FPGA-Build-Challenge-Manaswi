@@ -279,9 +279,102 @@ def diagram_experiment2():
     return d
 
 
+def diagram_experiment3():
+    W, H = 480, 300
+    d = Drawing(W, H)
+    d.add(Rect(0, 0, W, H, fillColor=colors.white, strokeColor=colors.white))
+
+    box(d, 10, 210, 110, 55, '#fef3c7', '#b45309', [('Temperature Model', True, 7.5), ('triangle wave', False, 6.5)])
+    box(d, 150, 210, 100, 55, '#eef2ff', '#4338ca', [('Band Classifier', True, 7.5), ('LOW/MID/HIGH', False, 6.5)])
+    box(d, 10, 130, 110, 65, '#fee2e2', '#b91c1c',
+        [('Inputs', True, 7.5), ('BTN1-3=events', False, 6.3), ('SW1:0=mode', False, 6.3)])
+
+    box(d, 280, 90, 190, 150, '#dcfce7', '#15803d',
+        [('Fixed-Priority', True, 8), ('Rule Table', True, 8), ('R0 ALERT', False, 6.3),
+         ('R1 THROTTLE', False, 6.3), ('R2 SAFE_MODE', False, 6.3), ('R3 CALIBRATE', False, 6.3),
+         ('R4 BOOST', False, 6.3), ('R5 ECO_BOOST', False, 6.3), ('R6 LOG_EVENT', False, 6.3),
+         ('R7 NONE (default)', False, 6.3)])
+
+    box(d, 280, 20, 190, 50, '#fff7ed', '#c2410c', [('LED Display', True, 7.5), ('heartbeat + action', False, 6.5)])
+
+    arrow(d, 120, 237, 150, 237)
+    arrow(d, 120, 162, 280, 180)
+    arrow(d, 250, 237, 280, 200)
+    arrow(d, 375, 90, 375, 70)
+
+    d.add(String(W/2, H-16, "CPU-FPGA Decision Engine -- Block Diagram",
+                  fontSize=10.5, fontName='Helvetica-Bold', textAnchor='middle',
+                  fillColor=colors.HexColor('#1a1a2e')))
+    return d
+
+
+def diagram_experiment4():
+    W, H = 480, 310
+    d = Drawing(W, H)
+    d.add(Rect(0, 0, W, H, fillColor=colors.white, strokeColor=colors.white))
+
+    box(d, 10, 230, 110, 50, '#fae8ff', '#a21caf', [('Test ROM', True, 7.5), ('8 vectors (Exp.1)', False, 6.3)])
+    box(d, 160, 230, 130, 45, '#dcfce7', '#15803d', [('alu4 golden', True, 7.5), ('clean reference', False, 6.3)])
+    box(d, 160, 160, 130, 50, '#fee2e2', '#b91c1c', [('Fault Wrapper', True, 7.5), ('a/b injection', False, 6.3)])
+    box(d, 160, 95, 130, 45, '#fee2e2', '#b91c1c', [('alu4 faulted_core', True, 7.2), ('same DUT core', False, 6.3)])
+    box(d, 10, 95, 110, 70, '#eef2ff', '#4338ca',
+        [('Fault Config', True, 7.5), ('BTN1-3=target', False, 6.3), ('SW1:0=type', False, 6.3)])
+
+    box(d, 330, 160, 140, 70, '#e0f2fe', '#0369a1', [('Comparator', True, 7.5), ('mismatch_count', False, 6.3)])
+    box(d, 330, 70, 140, 70, '#fff7ed', '#c2410c',
+        [('Free-running FSM', True, 7.3), ('RUN->DONE->RUN', False, 6.3), ('LED display', False, 6.3)])
+
+    arrow(d, 120, 95+35, 160, 180)
+    arrow(d, 120, 250, 160, 250)
+    arrow(d, 290, 250, 320, 200)
+    arrow(d, 290, 118, 320, 185)
+    arrow(d, 400, 160, 400, 140)
+
+    d.add(String(W/2, H-16, "FAULTX -- Block Diagram",
+                  fontSize=10.5, fontName='Helvetica-Bold', textAnchor='middle',
+                  fillColor=colors.HexColor('#1a1a2e')))
+    return d
+
+
+def diagram_experiment5():
+    W, H = 480, 300
+    d = Drawing(W, H)
+    d.add(Rect(0, 0, W, H, fillColor=colors.white, strokeColor=colors.white))
+
+    box(d, 10, 210, 140, 65, '#fef3c7', '#b45309',
+        [('raw_bit_fn', True, 8), ('(PLACEHOLDER)', True, 6.8), ('see honest scope note', False, 6.3)])
+    box(d, 175, 210, 130, 65, '#eef2ff', '#4338ca',
+        [('K=5 Sampler', True, 7.5), ('1 bit/tick', False, 6.3), ('BTN3=noise', False, 6.3)])
+    box(d, 330, 210, 140, 65, '#dcfce7', '#15803d',
+        [('Majority Vote', True, 7.5), ('>=3-of-5', False, 6.3), ('"Adaptive" stage', False, 6.3)])
+
+    box(d, 30, 110, 170, 65, '#fae8ff', '#a21caf',
+        [('Enrollment Store', True, 7.5), ('storage_bits[4]', False, 6.3), ('BTN1=enroll', False, 6.3)])
+    box(d, 240, 110, 170, 65, '#e0f2fe', '#0369a1',
+        [('Auth Comparator', True, 7.5), ('vote==stored?', False, 6.3), ('BTN2=auth', False, 6.3)])
+
+    box(d, 130, 30, 220, 55, '#fff7ed', '#c2410c',
+        [('LED Display', True, 7.5), ('match | enrolled? | challenge', False, 6.3), ('SW1:0=challenge', False, 6.3)])
+
+    arrow(d, 150, 242, 175, 242)
+    arrow(d, 305, 242, 330, 242)
+    arrow(d, 400, 210, 115, 175)
+    arrow(d, 400, 210, 325, 175)
+    arrow(d, 115, 110, 220, 85)
+    arrow(d, 325, 110, 260, 85)
+
+    d.add(String(W/2, H-16, "Adaptive PUF Authentication -- Block Diagram",
+                  fontSize=10.5, fontName='Helvetica-Bold', textAnchor='middle',
+                  fillColor=colors.HexColor('#1a1a2e')))
+    return d
+
+
 DIAGRAMS = {
     1: diagram_experiment1,
     2: diagram_experiment2,
+    3: diagram_experiment3,
+    4: diagram_experiment4,
+    5: diagram_experiment5,
 }
 
 
@@ -359,4 +452,19 @@ if __name__ == '__main__':
         root / "Experiment-2-Beginner" / "Documentation" / "report_source.md",
         root / "Experiment-2-Beginner" / "Documentation" / "Experiment2_TrustFuse_Hardware_Sensor_Trust.pdf",
         2
+    )
+    build_pdf(
+        root / "Experiment-3-Intermediate" / "Documentation" / "report_source.md",
+        root / "Experiment-3-Intermediate" / "Documentation" / "Experiment3_CPU_FPGA_Decision_Engine.pdf",
+        3
+    )
+    build_pdf(
+        root / "Experiment-4-Intermediate" / "Documentation" / "report_source.md",
+        root / "Experiment-4-Intermediate" / "Documentation" / "Experiment4_FAULTX_HIL_Fault_Injection.pdf",
+        4
+    )
+    build_pdf(
+        root / "Experiment-5-Advanced" / "Documentation" / "report_source.md",
+        root / "Experiment-5-Advanced" / "Documentation" / "Experiment5_Adaptive_PUF_Authentication.pdf",
+        5
     )
