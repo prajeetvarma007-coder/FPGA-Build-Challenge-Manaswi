@@ -1,0 +1,50 @@
+# ============================================================
+# .gitignore for FPGA Build Challenge - PYNQ-Z2 (Vivado)
+# ============================================================
+
+# Vivado project internals - DO NOT PUSH (gigabytes of junk)
+vivado_project/
+*.jou
+*.log
+*.str
+*.pb
+.Xil/
+xsim.dir/
+work/
+
+# Vivado run artifacts
+**/.cache/
+**/.hw/
+**/.ip_user_files/
+**/.runs/
+**/.sim/
+**/.srcs/
+**/runs/
+**/cache/
+
+# Vivado temp files
+*.xpr
+*.vdi
+*.xci
+
+# Bitstream - push only if under 100MB (GitHub limit)
+# Comment out the line below if you want to include .bit files
+# *.bit
+
+# OS junk
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ============================================================
+# What IS pushed:
+# ✅ RTL/*.v        - Verilog source
+# ✅ RTL/*.xdc      - Constraints
+# ✅ Testbench/*.v  - Testbench
+# ✅ Simulation/*.png *.pdf *.txt - Results
+# ✅ Images/*.png *.jpg          - Screenshots
+# ✅ Documentation/*.pdf         - Reports
+# ✅ Bitstream/*.bit             - Programm file (< 100MB)
+# ✅ Video_Link.txt
+# ✅ README.md
+# ============================================================

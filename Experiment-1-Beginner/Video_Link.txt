@@ -1,0 +1,5 @@
+Experiment 1 - Automated Digital Circuit Tester
+Google Drive video link: [ TODO - Manaswi: record demo video and paste the
+shareable Google Drive link here. Video must cover: Introduction, Problem
+Statement, Design Explanation (architecture + RTL code walkthrough),
+Demonstration (hardware setup + board running), Conclusion. ]

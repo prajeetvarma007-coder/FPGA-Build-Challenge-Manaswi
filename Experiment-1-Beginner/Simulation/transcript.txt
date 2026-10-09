@@ -1,0 +1,40 @@
+﻿
+****** xsim v2026.1 (64-bit)
+  **** SW Build 6511674 on Tue Jun 16 11:02:23 MDT 2026
+  **** IP Build 6504888 on Tue Jun 09 09:05:25 MDT 2026
+  **** SharedData Build 6501428 on Mon Jun 08 17:34:18 MDT 2026
+  **** Start of session at: Sat Oct 10 01:17:26 2026
+    ** Copyright 1986-2022 Xilinx, Inc. All Rights Reserved.
+    ** Copyright 2022-2026 Advanced Micro Devices, Inc. All Rights Reserved.
+
+source xsim.dir/tb_top_sim/xsim_script.tcl
+# xsim {tb_top_sim} -autoloadwcfg -runall
+Time resolution is 1 ps
+run -all
+================================================
+ Automated Digital Circuit Tester - Testbench
+================================================
+
+-- Phase 1: Golden-model cross-check --
+  [OK]   vector 0: a=3 b=2 op=00 -> cout=0 result=5
+  [OK]   vector 1: a=f b=1 op=00 -> cout=1 result=0
+  [OK]   vector 2: a=5 b=3 op=01 -> cout=1 result=2
+  [OK]   vector 3: a=2 b=5 op=01 -> cout=0 result=d
+  [OK]   vector 4: a=a b=6 op=10 -> cout=0 result=2
+  [OK]   vector 5: a=c b=3 op=11 -> cout=0 result=f
+  [OK]   vector 6: a=0 b=0 op=00 -> cout=0 result=0
+  [OK]   vector 7: a=9 b=9 op=01 -> cout=1 result=0
+
+-- Phase 2: Hardware FSM test sequence --
+  Final LED = 1000 (led[3]=PASS/FAIL, led[2:0]=index)
+  [PASS] All 8 vectors passed, as expected for a correct ALU.
+
+-- Phase 3: Reset behaviour --
+  [PASS] Reset clears LEDs and returns FSM to IDLE.
+
+================================================
+ TESTBENCH SUMMARY: ALL CHECKS PASSED (0 errors)
+================================================
+$finish called at time : 460 ns : File "C:/Users/siddh/FPGA-Build-Challenge-Manaswi/Experiment-1-Beginner/Testbench/tb_top.v" Line 150
+exit
+INFO: [Common 17-206] Exiting xsim at Sat Oct 10 01:17:28 2026...

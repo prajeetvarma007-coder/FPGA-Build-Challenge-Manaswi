@@ -1,0 +1,43 @@
+﻿
+****** xsim v2026.1 (64-bit)
+  **** SW Build 6511674 on Tue Jun 16 11:02:23 MDT 2026
+  **** IP Build 6504888 on Tue Jun 09 09:05:25 MDT 2026
+  **** SharedData Build 6501428 on Mon Jun 08 17:34:18 MDT 2026
+  **** Start of session at: Sat Oct 10 01:19:20 2026
+    ** Copyright 1986-2022 Xilinx, Inc. All Rights Reserved.
+    ** Copyright 2022-2026 Advanced Micro Devices, Inc. All Rights Reserved.
+
+source xsim.dir/tb_top_sim/xsim_script.tcl
+# xsim {tb_top_sim} -autoloadwcfg -runall
+Time resolution is 1 ps
+run -all
+================================================
+ TrustFuse - Hardware Sensor Trust - Testbench
+================================================
+
+Base value pinned at 50 (sensor1=50 sensor2=53 sensor3=47)
+
+-- Phase 1: Nominal (no fault) --
+  [PASS] All three sensors agree -> HIGH trust : led=1100 (expected 1100)
+
+-- Phase 2: Fault injected on sensor1 --
+  [PASS] sensor1 forced to 0xFF -> MEDIUM trust, sensor1 flagged : led=1001 (expected 1001)
+
+-- Phase 3: Fault injected on sensor2 --
+  [PASS] sensor2 forced to 0x00 -> MEDIUM trust, sensor2 flagged : led=1010 (expected 1010)
+
+-- Phase 4: Fault injected on sensor3 --
+  [PASS] sensor3 driven to +60 (saturated) -> MEDIUM trust, sensor3 flagged : led=1011 (expected 1011)
+
+-- Phase 5: Faults on sensor1 AND sensor2 simultaneously --
+  [PASS] Two sensors faulted -> NONE trust (total fault) : led=0000 (expected 0000)
+
+-- Phase 6: Reset behaviour --
+  [PASS] Reset returns base_value to BASE_MIN (10).
+
+================================================
+ TESTBENCH SUMMARY: ALL CHECKS PASSED (0 errors)
+================================================
+$finish called at time : 1452 ns : File "C:/Users/siddh/FPGA-Build-Challenge-Manaswi/Experiment-2-Beginner/Testbench/tb_top.v" Line 149
+exit
+INFO: [Common 17-206] Exiting xsim at Sat Oct 10 01:19:22 2026...
