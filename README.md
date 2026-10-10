@@ -16,14 +16,6 @@
 
 ## Project Summary
 
-| # | Folder | Experiment | Difficulty | RTL | Simulation | Bitstream | Docs |
-|---|--------|------------|------------|:---:|:---:|:---:|:---:|
-| 1 | `Experiment-1-Beginner` | **Automated Digital Circuit Tester** | Beginner 
-| 2 | `Experiment-2-Beginner` | **TrustFuse — Hardware Sensor Trust** | Beginner 
-| 3 | `Experiment-3-Intermediate` | **CPU–FPGA Decision Engine** | Intermediate 
-| 4 | `Experiment-4-Intermediate` | **FAULTX — HIL Fault Injection** | Intermediate 
-| 5 | `Experiment-5-Advanced` | **Adaptive PUF Authentication** | Advanced 
-
 **All 5 experiments are RTL-complete and simulation-verified (0 errors each, every expected value hand-derived before running).** Only hardware bring-up (bitstream + board photos + video) remains — see "Known Gaps" below.
 
 ### Experiment 1 — Automated Digital Circuit Tester *(Beginner)*
