@@ -51,12 +51,58 @@ TRANSCRIPT = ParagraphStyle('TranscriptX', parent=CODE,
                              backColor=colors.HexColor('#0f172a'),
                              textColor=colors.HexColor('#e2e8f0'))
 TODO = ParagraphStyle('TodoX', parent=styles['Normal'], fontSize=9.5,
-                       leading=13, backColor=colors.HexColor('#fff7e6'),
+                       leading=14, backColor=colors.HexColor('#fff7e6'),
                        borderColor=colors.HexColor('#d97706'), borderWidth=0.8,
                        borderPadding=8, spaceAfter=10, spaceBefore=4,
                        textColor=colors.HexColor('#7c2d12'))
 FOOTNOTE = ParagraphStyle('FootX', parent=styles['Italic'], fontSize=8.5,
                            alignment=TA_CENTER, textColor=colors.HexColor('#777777'))
+BULLET = ParagraphStyle('BulletX', parent=styles['Normal'], fontSize=10.3,
+                         leading=15, spaceAfter=4, leftIndent=16,
+                         bulletIndent=2, alignment=TA_LEFT)
+
+
+def clean_todo_line(line):
+    """Strip the [ TODO ... ] / **[ TODO ... ]** wrapper markup from one line
+    of a (possibly multi-line) TODO block, leaving just its readable text."""
+    line = line.strip()
+    line = re.sub(r'^\*\*\[\s*TODO\s*', '', line)
+    line = re.sub(r'^\[\s*TODO\s*', '', line)
+    line = re.sub(r'\]\*\*\s*$', '', line)
+    line = re.sub(r'\]\s*$', '', line)
+    line = re.sub(r'^[—\-]\s*', '', line)  # drop a leading em-dash/hyphen separator
+    return line.strip()
+
+
+# ReportLab's base-14 fonts only cover WinAnsiEncoding (roughly CP1252).
+# Em-dash/en-dash/smart-quotes/ellipsis ARE in that range and render fine;
+# arrows, math comparison symbols, minus-sign, non-breaking hyphen and
+# box-drawing characters are NOT and render as broken "tofu" glyphs. Map
+# them all to plain ASCII so both prose and code blocks are always safe.
+UNICODE_FIXES = {
+    '→': '->',   # RIGHTWARDS ARROW
+    '←': '<-',   # LEFTWARDS ARROW
+    '≥': '>=',   # GREATER-THAN OR EQUAL TO
+    '≤': '<=',   # LESS-THAN OR EQUAL TO
+    '≈': '~=',   # ALMOST EQUAL TO
+    '−': '-',    # MINUS SIGN
+    '‑': '-',    # NON-BREAKING HYPHEN
+    '─': '-',    # BOX DRAWINGS LIGHT HORIZONTAL
+    '│': '|',    # BOX DRAWINGS LIGHT VERTICAL
+    '└': '+',    # BOX DRAWINGS LIGHT UP AND RIGHT
+    '┘': '+',    # BOX DRAWINGS LIGHT UP AND LEFT
+    '├': '+',    # BOX DRAWINGS LIGHT VERTICAL AND RIGHT
+    '┬': '+',    # BOX DRAWINGS LIGHT DOWN AND HORIZONTAL
+    '┴': '+',    # BOX DRAWINGS LIGHT UP AND HORIZONTAL
+    '┌': '+',    # BOX DRAWINGS LIGHT DOWN AND RIGHT
+    '┐': '+',    # BOX DRAWINGS LIGHT DOWN AND LEFT
+}
+
+
+def sanitize_unicode(text):
+    for bad, good in UNICODE_FIXES.items():
+        text = text.replace(bad, good)
+    return text
 
 
 def inline(text):
@@ -66,6 +112,8 @@ def inline(text):
     text = text.replace('&amp;nbsp;', '&nbsp;')
     text = re.sub(r'`([^`]+)`', r'<font face="Courier" color="#a21caf">\1</font>', text)
     text = re.sub(r'\*\*([^*]+)\*\*', r'<b>\1</b>', text)
+    # single-asterisk italics (run AFTER bold, so no literal ** remain to confuse it)
+    text = re.sub(r'\*([^*]+)\*', r'<i>\1</i>', text)
     text = re.sub(r'\[([^\]]+)\]\(([^)]+)\)', r'<font color="#2563eb"><u>\1</u></font>', text)
     return text
 
@@ -117,7 +165,7 @@ def parse_markdown(md_text):
                     break
                 todo_lines.append(lines[i].strip())
                 i += 1
-            blocks.append(('todo', ' '.join(todo_lines)))
+            blocks.append(('todo', todo_lines))  # keep as a list of lines, not joined
             continue
 
         if line.strip().startswith('|'):
@@ -128,16 +176,30 @@ def parse_markdown(md_text):
             blocks.append(('table', table_lines))
             continue
 
+        m_bullet = re.match(r'^-\s+(.*)', line)
+        if m_bullet:
+            blocks.append(('bullet', m_bullet.group(1)))
+            i += 1
+            continue
+
+        m_num = re.match(r'^(\d+)\.\s+(.*)', line)
+        if m_num:
+            blocks.append(('number', m_num.group(1), m_num.group(2)))
+            i += 1
+            continue
+
         if line.strip() == '':
             i += 1
             continue
 
-        # paragraph (collect until blank line / special marker)
+        # paragraph (collect until blank line / special marker / list item)
         para_lines = [line]
         i += 1
         while i < n and lines[i].strip() != '' and not lines[i].startswith('#') \
                 and not lines[i].startswith('```') and not lines[i].strip().startswith('|') \
-                and lines[i].strip() != '---':
+                and lines[i].strip() != '---' \
+                and not re.match(r'^-\s+', lines[i]) \
+                and not re.match(r'^\d+\.\s+', lines[i]):
             para_lines.append(lines[i])
             i += 1
         blocks.append(('p', ' '.join(para_lines)))
@@ -226,9 +288,6 @@ def diagram_experiment1():
     arrow(d, 390, 177, 305, 195)
     arrow(d, 305, 150, 305, 95)
 
-    d.add(String(W/2, H-16, "Automated Digital Circuit Tester -- Block Diagram",
-                  fontSize=10.5, fontName='Helvetica-Bold', textAnchor='middle',
-                  fillColor=colors.HexColor('#1a1a2e')))
     return d
 
 
@@ -273,9 +332,6 @@ def diagram_experiment2():
     arrow(d, 440, 190, 400, 130)
     arrow(d, 220, 60, 160, 48)
 
-    d.add(String(W/2, H-16, "TrustFuse -- Block Diagram",
-                  fontSize=10.5, fontName='Helvetica-Bold', textAnchor='middle',
-                  fillColor=colors.HexColor('#1a1a2e')))
     return d
 
 
@@ -302,9 +358,6 @@ def diagram_experiment3():
     arrow(d, 250, 237, 280, 200)
     arrow(d, 375, 90, 375, 70)
 
-    d.add(String(W/2, H-16, "CPU-FPGA Decision Engine -- Block Diagram",
-                  fontSize=10.5, fontName='Helvetica-Bold', textAnchor='middle',
-                  fillColor=colors.HexColor('#1a1a2e')))
     return d
 
 
@@ -330,9 +383,6 @@ def diagram_experiment4():
     arrow(d, 290, 118, 320, 185)
     arrow(d, 400, 160, 400, 140)
 
-    d.add(String(W/2, H-16, "FAULTX -- Block Diagram",
-                  fontSize=10.5, fontName='Helvetica-Bold', textAnchor='middle',
-                  fillColor=colors.HexColor('#1a1a2e')))
     return d
 
 
@@ -363,9 +413,6 @@ def diagram_experiment5():
     arrow(d, 115, 110, 220, 85)
     arrow(d, 325, 110, 260, 85)
 
-    d.add(String(W/2, H-16, "Adaptive PUF Authentication -- Block Diagram",
-                  fontSize=10.5, fontName='Helvetica-Bold', textAnchor='middle',
-                  fillColor=colors.HexColor('#1a1a2e')))
     return d
 
 
@@ -393,17 +440,21 @@ def make_footer(team_line):
 
 
 def build_pdf(md_path: Path, out_path: Path, exp_num: int):
-    text = md_path.read_text(encoding='utf-8')
+    text = sanitize_unicode(md_path.read_text(encoding='utf-8'))
     blocks = parse_markdown(text)
 
     story = []
     title_done = False
 
-    for kind, content in blocks:
+    for block in blocks:
+        kind = block[0]
+
         if kind == 'title':
+            content = block[1]
             story.append(Paragraph(inline(content), TITLE))
             title_done = True
         elif kind == 'h1':
+            content = block[1]
             if re.match(r'^\d+\.\s', content):
                 story.append(HRFlowable(width="100%", thickness=0.6,
                                          color=colors.HexColor('#dddddd'), spaceBefore=2, spaceAfter=2))
@@ -414,20 +465,33 @@ def build_pdf(md_path: Path, out_path: Path, exp_num: int):
                 story.append(DIAGRAMS[exp_num]())
                 story.append(Spacer(1, 6))
         elif kind == 'h2':
+            content = block[1]
             story.append(Paragraph(inline(content), H2))
         elif kind == 'p':
+            content = block[1]
             if title_done and ('Team:' in content or '**Team:**' in content):
                 story.append(Paragraph(inline(content), SUBTITLE))
             else:
                 story.append(Paragraph(inline(content), BODY))
+        elif kind == 'bullet':
+            content = block[1]
+            story.append(Paragraph('•&nbsp;&nbsp;' + inline(content), BULLET))
+        elif kind == 'number':
+            _, num, content = block
+            story.append(Paragraph(f'{num}.&nbsp;&nbsp;' + inline(content), BULLET))
         elif kind == 'code':
+            content = block[1]
             story.append(Preformatted(content, CODE))
         elif kind == 'table':
+            content = block[1]
             story.append(render_table(content))
             story.append(Spacer(1, 8))
         elif kind == 'todo':
-            cleaned = content.replace('**[ TODO', '[ TODO').replace(' ]**', ' ]')
-            story.append(Paragraph('<b>&#9888; TO DO:</b> ' + inline(cleaned.lstrip('[').rstrip(']').replace('TODO', '', 1).strip(' -')), TODO))
+            todo_lines = block[1]
+            cleaned_lines = [clean_todo_line(l) for l in todo_lines]
+            cleaned_lines = [l for l in cleaned_lines if l]  # drop any now-empty lines
+            body = '<br/>'.join(inline(l) for l in cleaned_lines)
+            story.append(Paragraph('<b>⚠ TO DO:</b><br/>' + body, TODO))
         elif kind == 'hr':
             story.append(Spacer(1, 4))
 
