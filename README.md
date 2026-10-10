@@ -5,9 +5,9 @@
 | Field | Details |
 |-------|---------|
 | **Team Name** | Mahasena |
-| **Team Lead** | Manaswi |
-| **Team Members** | *(add remaining member names here)* |
-| **Registration Numbers** | *(add here)* |
+| **Team Lead** | Prajeet Varma |
+| **Team Members** |Manaswi |
+| **Registration Numbers** | 24BEC0059,24BEC420 |
 | **Selected FPGA Board** | PYNQ-Z2 |
 | **FPGA Chip** | Xilinx Zynq XC7Z020CLG400-1 |
 | **Toolchain** | AMD Vivado 2026.1 |
@@ -18,11 +18,11 @@
 
 | # | Folder | Experiment | Difficulty | RTL | Simulation | Bitstream | Docs |
 |---|--------|------------|------------|:---:|:---:|:---:|:---:|
-| 1 | `Experiment-1-Beginner` | **Automated Digital Circuit Tester** | Beginner | ✅ | ✅ 0 errors | ⏳ pending | ✅ |
-| 2 | `Experiment-2-Beginner` | **TrustFuse — Hardware Sensor Trust** | Beginner | ✅ | ✅ 0 errors | ⏳ pending | ✅ |
-| 3 | `Experiment-3-Intermediate` | **CPU–FPGA Decision Engine** | Intermediate | ✅ | ✅ 0 errors | ⏳ pending | ✅ |
-| 4 | `Experiment-4-Intermediate` | **FAULTX — HIL Fault Injection** | Intermediate | ✅ | ✅ 0 errors | ⏳ pending | ✅ |
-| 5 | `Experiment-5-Advanced` | **Adaptive PUF Authentication** | Advanced | ✅ | ✅ 0 errors | ⏳ pending | ✅ |
+| 1 | `Experiment-1-Beginner` | **Automated Digital Circuit Tester** | Beginner 
+| 2 | `Experiment-2-Beginner` | **TrustFuse — Hardware Sensor Trust** | Beginner 
+| 3 | `Experiment-3-Intermediate` | **CPU–FPGA Decision Engine** | Intermediate 
+| 4 | `Experiment-4-Intermediate` | **FAULTX — HIL Fault Injection** | Intermediate 
+| 5 | `Experiment-5-Advanced` | **Adaptive PUF Authentication** | Advanced 
 
 **All 5 experiments are RTL-complete and simulation-verified (0 errors each, every expected value hand-derived before running).** Only hardware bring-up (bitstream + board photos + video) remains — see "Known Gaps" below.
 
@@ -72,7 +72,7 @@ FPGA-Build-Challenge-Manaswi/
 
 ---
 
-## Known Gaps — Please Complete (Manaswi)
+## Known Gaps — Please Complete (PRAJEET)
 
 These are the items that need **physical hardware access or a license fix**
 that could not be completed from this environment:
@@ -116,22 +116,6 @@ that could not be completed from this environment:
 6. Fill in remaining **team member names & registration numbers** above.
 
 ---
-
-## What's Already Done
-
-- ✅ **All 5 experiments**: complete, synthesizable RTL (clean compile, no errors)
-- ✅ **All 5 experiments**: self-checking testbenches, **run and verified** —
-  0 errors each, every expected value hand-calculated *before* running and
-  matched exactly (total: 1 + 1 + 11 + 4 + 6 = 23 individually hand-derived
-  checks across the 5 testbenches, all passing)
-- ✅ **All 5 experiments**: PYNQ-Z2 XDC constraints (pins verified against an
-  independent published PYNQ-Z2 pin reference)
-- ✅ **All 5 experiments**: block diagrams, full documentation PDFs (7-section
-  format per the competition brief), each with an honestly-documented
-  limitation/finding (TrustFuse's tolerance overlap, FAULTX's masked fault,
-  PUF's entropy-placeholder scope note and margin-sensitivity finding)
-- ✅ `.gitignore` configured to exclude Vivado project junk
-- ✅ Local git repository, pushed to GitHub (`main` + `dev` branches)
 
 ## How to Re-run Any Simulation Yourself
 
